@@ -1,0 +1,5 @@
+---
+interface_number: loopback13
+interface_ip: 13.13.13.13
+interface_mask: 255.255.255.255
+...
