@@ -7,6 +7,6 @@
   tasks:
     - name: Configure loopback interface
       cisco.ios.ios_config:
-        parents: interface {{ interface_number }}
+        parents: interface {{ interface_number }} # Double curly brackets are used to define the Variables
         lines:
           - ip address {{ interface_ip }} {{ interface_mask }}
