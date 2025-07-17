@@ -10,4 +10,3 @@
         parents: interface {{ interface_number }}
         lines:
           - ip address {{ interface_ip }} {{ interface_mask }}
-...

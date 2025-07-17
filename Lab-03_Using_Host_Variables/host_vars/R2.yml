@@ -2,4 +2,3 @@
 interface_number: loopback12
 interface_ip: 12.12.12.12
 interface_mask: 255.255.255.255
-...
