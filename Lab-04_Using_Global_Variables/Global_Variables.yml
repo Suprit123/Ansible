@@ -1,0 +1,17 @@
+---
+- name: Configure sys log server
+  hosts: routers  
+  gather_facts: false
+  connection: network_cli
+
+# So, all the common vars are in the Group_Vars.yml files and we call that file under vars:
+  vars_files:
+    - Group_Vars.yml
+
+  tasks:
+    - name: Configure sys log
+      cisco.ios.ios_config:
+        lines:
+          - logging host {{ sys1 }}
+          - logging host {{ sys2 }}
+
