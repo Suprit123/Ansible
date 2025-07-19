@@ -1,7 +1,7 @@
 # Parent
 [ios]
 
-# Common Variables
+# Common values for routers should go under variables
 [ios:vars]
 ansible_user=admin
 ansible_password=cisco
@@ -11,7 +11,6 @@ ansible_network_os=ios
 [ios:children]
 routers
 
-# IOS router IP details
 [routers]
 R1 ansible_host=10.255.1.101
 R2 ansible_host=10.255.1.102
