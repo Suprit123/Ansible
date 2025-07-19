@@ -1,3 +1,4 @@
+# In these lab we are going to get the values from the host Variables file which are under host_vars folder.
 ---
 - name: Configure loopback using Host Variables
   hosts: routers
