@@ -19,7 +19,7 @@
           - "ip address {{ hostvars[inventory_hostname].loopback_ips[item.id] }} {{ loopback_mask }}"
           - "no shut"
 
-      loop:
+      loop: "{{ loopbacks }}"
       loop_control:
         label: "Loopback{{ item.id }}"
 
