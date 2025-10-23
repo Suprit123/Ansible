@@ -1,19 +1,19 @@
 ---
-- name: configure loopback0 on R1
+- name: Configure Loopback0 on R1
   hosts: routers
   gather_facts: false
   connection: network_cli
 
   tasks:
-    - name: configure loopback0 interface
+    - name: Configure loopback0 interface
       cisco.ios.ios_config:
-        parents: interface loopback0
+        parents: interface Loopback0
         lines:
-        - description configured using ansible
-        - ip address 192.168.100.1 255.255.255.255
-        - no shut
+          - description Configured using Ansible
+          - ip address 192.168.100.1 255.255.255.255
+          - no shutdown
       register: config_output
-    
-    - name: show the config_output
-      debug:
-        msg: "{{config_output.commands}}"
+
+    - name: Show the config_output
+      ansible.builtin.debug:
+        msg: "{{ config_output.commands }}"
