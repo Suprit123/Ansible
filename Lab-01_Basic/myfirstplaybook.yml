@@ -29,7 +29,7 @@
         # Configuration lines to apply under the 'interface loopback 0' context
         lines:
           # Assign IP address and subnet mask to the Loopback0 interface
-          - ip add 10.10.10.10 255.255.255.255
+          - ip add 10.10.10.100 255.255.255.255
           # Enable the interface administratively
           - no shutdown
           # Add a description to the interface for documentation
