@@ -1,2 +1,26 @@
 ---
-- name:
+- name: Configure Banner and MOTD on R1
+  hosts: R1
+  gather_facts: false
+  connection: network_cli
+
+  # Tasks to configure the MOTD banner
+  tasks:
+    - name: Configure Motd on Router
+      cisco.ios.ios_banner:
+        banner: motd
+        text: |
+          ********************************
+          Contact Your Network Admin
+          ********************************
+        state: present
+    # Task to verify the MOTD configuration
+    - name: Verify MOTD Configuration
+      cisco.ios.ios_command:
+        commands:
+          - show banner motd
+      register: motd_output
+    # Task to print the MOTD configuration
+    - name: Printout MOTD Configuration
+      ansible.builtin.debug:
+        msg: "{{ motd_output }}"
