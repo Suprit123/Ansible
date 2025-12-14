@@ -1,9 +1,0 @@
----
-# Define the loopback interfaces on every router. Since loopback 1 and 2 are going to get created on every router we have created a seperate folder and as group_vars
-
-# Below loopback is a list type where it id is key and 1 & 2 are value
-loopbacks:
-  - id: 1
-    des: loopback1 configured by ansibe
-  - id: 2
-    des: loopback configured by ansible
