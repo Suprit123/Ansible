@@ -1,0 +1,18 @@
+---
+# Ansible Playbook to demonstrate accessing data out of variables
+- name: Accessing Data Out of Variables Playbook
+  hosts: cisco
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    # Task to display various data from hostvars and group_vars
+    - name: Display Data
+      ansible.builtin.debug:
+        msg:
+          - "The Hostvars for this device are: {{ hostvars }}"
+          - "The IP address of the device is {{ ansible_host }}"
+          - "The NTP server configured is {{ ntp_servers }}"
+          - "The OSPF Area is {{ ospf_area.area }}"
+          - "The OSPF Network is {{ ospf_area.network }}"
+          - "The OSPF Router ID is {{ ospf_area.router_id }}"
