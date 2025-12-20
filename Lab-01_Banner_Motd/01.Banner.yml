@@ -22,6 +22,6 @@
           - show banner motd
       register: output
   # Print the banner output
-    - name: Display the banner output
+    - name: Display the banner
       ansible.builtin.debug:
         msg: "{{ output }}"
