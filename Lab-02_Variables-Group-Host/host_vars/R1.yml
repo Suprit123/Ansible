@@ -1,0 +1,2 @@
+ntp_servers: "2.2.2.2"
+# values mentioned here will override those in group_vars/cisco.yml

@@ -1,0 +1,12 @@
+---
+# Ansible Playbook to print out all variables for the host 'cisco'
+- name: Print out the variables
+  hosts: cisco
+  gather_facts: false
+  connection: network_cli
+
+  # Display all variables for the host
+  tasks:
+    - name: Display all variables
+      ansible.builtin.debug:
+        msg: "{{ hostvars }}"
