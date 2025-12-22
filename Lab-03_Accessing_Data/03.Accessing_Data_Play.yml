@@ -13,6 +13,8 @@
           - "The Hostvars for this device are: {{ hostvars }}"
           - "The IP address of the device is {{ ansible_host }}"
           - "The NTP server configured is {{ ntp_servers }}"
+
+          # OSPF configuration details using dotted notation from group_vars/cisco.yml
           - "The OSPF Area is {{ ospf_area.area }}"
           - "The OSPF Network is {{ ospf_area.network }}"
           - "The OSPF Router ID is {{ ospf_area.router_id }}"
