@@ -9,6 +9,7 @@ ansible_command_timeout: 120
 
 ntp_servers: "1.1.1.1"
 
+# OSPF configuration variables using object notation
 ospf_area:
   area: "0"
   network: "10.0.0.0 0.255.255.255"
