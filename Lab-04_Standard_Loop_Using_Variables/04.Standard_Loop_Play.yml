@@ -1,0 +1,37 @@
+---
+# Ansible Playbook to configure NTP on Cisco devices using a loop with variables
+- name: Configure NTP
+  hosts: cisco
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+      # Configure NTP servers using a loop
+    - name: Configure NTP on Cisco devices
+      # Define a list of NTP servers to be added
+      vars:
+        my_ntp_server:
+          - "1.1.1.1"
+          - "2.2.2.2"
+          - "3.3.3.3"
+          - "4.4.4.4"
+      cisco.ios.ios_ntp_global:
+        config:
+          peers:
+            # Loop through each NTP server in the list and add it
+            - peer: "{{ item }}"
+              version: 2
+      # Use a loop to iterate over the list of NTP servers
+      loop: "{{ my_ntp_server }}"
+
+    # Verify the NTP configuration
+    - name: Verify the NTP configuration
+      cisco.ios.ios_command:
+        commands:
+          - show ntp config
+      register: print_ntp
+
+    # Print the NTP configuration
+    - name: Print out the ntp configuration
+      ansible.builtin.debug:
+        msg: "{{ print_ntp }}"
