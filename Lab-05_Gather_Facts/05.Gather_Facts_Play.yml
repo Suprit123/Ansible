@@ -1,0 +1,27 @@
+---
+# Gather Facts Playbook
+- name: Gather Facts Playbook
+  hosts: cisco
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    # Gathering facts using cisco.ios.ios_facts module
+    - name: Gather Facts from Cisco device groups
+      cisco.ios.ios_facts:
+        gather_subset: all
+      register: facts_output
+    # Print out all gathered facts and specific facts
+    - name: Print out the facts
+      ansible.builtin.debug:
+        msg: "{{ facts_output.ansible_facts.ansible_net_version }}"
+
+    # Gather network resources on  l3 interfaces
+    - name: Gather network resources on L3 interfaces
+      cisco.ios.ios_facts:
+        gather_network_resources: l3_interfaces
+      register: l3_output
+    # Print out l3 interfaces details
+    - name: Print out L3 interfaces
+      ansible.builtin.debug:
+        msg: "{{ l3_output }}"
