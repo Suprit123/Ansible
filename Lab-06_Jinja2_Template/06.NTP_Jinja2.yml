@@ -1,0 +1,20 @@
+# Cisco NTP Configuration using Jinja2 Template
+---
+
+- name: Configure NTP on Cisco devices
+  hosts: cisco
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    # Task to apply NTP configuration using Jinja2 template
+    - name: Apply NTP configuration from Jinja2 template
+      cisco.ios.ios_config:
+      # Using the lines: parameter to load configuration from a Jinja2 template
+        lines: "{{ lookup('template', 'ntp.j2') }}"
+
+      register: ntp_config_result
+
+    - name: Display NTP configuration result
+      ansible.builtin.debug:
+        msg: "{{ ntp_config_result }}"

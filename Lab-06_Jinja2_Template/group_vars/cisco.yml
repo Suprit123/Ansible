@@ -1,0 +1,18 @@
+# Cisco device group variables
+ansible_user: admin
+ansible_password: letmein
+ansible_network_os: ios
+ansible_connection: network_cli
+ansible_become: yes
+ansible_become_method: enable
+ansible_command_timeout: 300
+
+# NTP configuration
+ntp_servers:
+  - "1.1.1.1"
+  - "2.2.2.2"
+  - "3.3.3.3"
+
+ntp_version: 2
+
+ntp_src_interface: GigabitEthernet0/0

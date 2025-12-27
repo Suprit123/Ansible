@@ -1,0 +1,6 @@
+# Using for loop to configure multiple NTP servers
+{% for ntp in ntp_servers %}
+# Configure NTP server using the provided variables from group_vars cisco.yml
+ntp server {{ ntp }} version {{ ntp_version }} source {{ ntp_src_interface }}
+# End of for loop
+{% endfor %}
