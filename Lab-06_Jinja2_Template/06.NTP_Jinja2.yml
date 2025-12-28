@@ -1,6 +1,4 @@
-# Cisco NTP Configuration using Jinja2 Template
 ---
-
 - name: Configure NTP on Cisco devices
   hosts: cisco
   gather_facts: false
@@ -10,11 +8,10 @@
     # Task to apply NTP configuration using Jinja2 template
     - name: Apply NTP configuration from Jinja2 template
       cisco.ios.ios_config:
-      # Using the lines: parameter to load configuration from a Jinja2 template
-        lines: "{{ lookup('template', 'ntp.j2') }}"
-
+        # Load NTP configuration from Jinja2 template using lines: and ).splitlines for proper formatting
+        lines: "{{ lookup('template', 'ntp.j2').splitlines() }}"
       register: ntp_config_result
-
+    # Task to display the result of the NTP configuration
     - name: Display NTP configuration result
       ansible.builtin.debug:
-        msg: "{{ ntp_config_result }}"
+        var: ntp_config_result
