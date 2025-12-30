@@ -1,0 +1,25 @@
+---
+- name: IP Configuration via Jinja2
+  hosts: R1
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+   - name: Configure Interfaces using Jinja2 Template
+     cisco.ios.ios_config:
+      lines: "{{ lookup('template', 'interface.j2') }}"
+     register: template_output
+
+   - name: Print Template Output
+     ansible.builtin.debug:
+      msg: "{{ template_output }}"
+
+   - name: Verify the Configuration
+     cisco.ios.ios_command:
+      commands:
+       - show ip int brief
+     register: show_interface
+
+   - name: Print Output
+     ansible.builtin.debug:
+      msg: "{{ show_interface.stdout_lines }}"
