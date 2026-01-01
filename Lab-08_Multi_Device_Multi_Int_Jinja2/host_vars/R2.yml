@@ -1,0 +1,26 @@
+# R2 host variables to configure multiple interfaces on device
+interface_config:
+  - name: GigabitEthernet0/1
+    description: Connected to R2
+    ip_address: 192.168.1.2
+    netmask: 255.255.255.0
+
+  - name: GigabitEthernet0/2
+    description: Connected to WAN2
+    ip_address: 22.22.22.22
+    netmask: 255.255.255.252
+
+  - name: GigabitEthernet0/3
+    description: Connected to DMZ2
+    ip_address: 192.168.10.3
+    netmask: 255.255.255.0
+
+  - name: Loopback0
+    description: Loopback Interface
+    ip_address: 13.13.13.13
+    netmask: 255.255.255.255
+
+  - name: Loopback1
+    description: Secondary Loopback Interface
+    ip_address: 14.14.14.14
+    netmask: 255.255.255.255
