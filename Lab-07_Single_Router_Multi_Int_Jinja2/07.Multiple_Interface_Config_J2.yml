@@ -7,19 +7,23 @@
   tasks:
    - name: Configure Interfaces using Jinja2 Template
      cisco.ios.ios_config:
+     # Content from Jinja2 template will be rendered and applied using the 'lines' parameter instead of 'src'
       lines: "{{ lookup('template', 'interface.j2') }}"
      register: template_output
 
+    # notify: Print Template Output
    - name: Print Template Output
      ansible.builtin.debug:
       msg: "{{ template_output }}"
 
+    # Verify the configuration
    - name: Verify the Configuration
      cisco.ios.ios_command:
       commands:
        - show ip int brief
      register: show_interface
 
+    # notify: Print Output
    - name: Print Output
      ansible.builtin.debug:
       msg: "{{ show_interface.stdout_lines }}"
