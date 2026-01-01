@@ -1,0 +1,26 @@
+---
+- name: Configure IP on cisco_router group
+  hosts: cisco_routers
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Configure IP address on R1 and R2 using Jinja2 template.
+      cisco.ios.ios_config:
+        lines: "{{ lookup('template', 'multi_interface.j2') }}"
+      register: template_output
+
+    - name: Displate the configuration
+      ansible.builtin.debug:
+        msg: "{{ template_output }}"
+
+    - name: Verify the configuration
+      cisco.ios.ios_command:
+        commands:
+          - show ip int brief
+          - ping 192.168.1.2
+      register: int_output
+
+    - name: Print the verification interfce output
+      ansible.builtin.debug:
+        msg: "{{ int_output }}"
