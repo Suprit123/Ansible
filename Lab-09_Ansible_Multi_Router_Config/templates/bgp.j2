@@ -1,0 +1,5 @@
+router bgp {{ bgp_config.asn }}
+  neighbor {{ bgp_config.peer_router }} remote-as {{ bgp_config.remote_as }}
+{% for net in bgp_config.advt_network %}
+  network {{ net.prefix }} mask {{ net.mask }}
+{% endfor %}

@@ -1,0 +1,23 @@
+# R1 router interface configuration variables
+interface_configs:
+  - name: GigabitEthernet0/1
+    description: Link to R2
+    ip: 192.168.1.1
+    subnet_mask: 255.255.255.0
+
+  - name: Loopback0
+    description: Loopback Interface
+    ip: 1.1.1.1
+    subnet_mask: 255.255.255.255
+
+# R1 host variables to configure BGP
+bgp_config:
+  asn: 100
+  peer_router: 192.168.1.2
+  remote_as: 200
+  # Create a object list of networks to advertise in BGP
+  advt_network:
+    - prefix: 1.1.1.1
+      mask: 255.255.255.255
+    - prefix: 192.168.1.0
+      mask: 255.255.255.0
