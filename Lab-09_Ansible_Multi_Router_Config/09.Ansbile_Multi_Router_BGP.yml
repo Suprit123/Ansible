@@ -1,0 +1,33 @@
+---
+
+- name: Configure Interface and BGP on Cisco Routers
+  hosts: cisco_routers
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Configure Interface on R1 and R2 Router
+      cisco.ios.ios_config:
+        parents: interface {{ item.name }}
+        lines:
+          - description {{ item.description }}
+          - ip address {{ item.ip }} {{ item.subnet_mask }}
+          - no shut
+      loop: "{{ interface_configs }}"
+
+
+    - name: Configure BGP using Jijna 2 templates on R1 and R2
+      cisco.ios.ios_config:
+        lines: "{{ lookup('template', 'bgp.j2') }}"
+
+    - name: Print the inteface and bgp config outpur
+      cisco.ios.ios_command:
+        commands:
+          - show run interface {{ item.name }}
+          - show run | sec router bgp
+      loop: "{{ interface_configs }}"
+      register: output
+
+    - name: Verify the config
+      ansible.builtin.debug:
+        msg: "{{ output }}"
