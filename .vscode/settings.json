@@ -1,4 +1,5 @@
 {
     "ansible.python.interpreterPath": "/usr/local/bin/python3.13",
-    "ansible.lint.path": "/Users/apple/.local/bin/ansible-lint"
+    "ansible.lint.path": "/Users/apple/.local/bin/ansible-lint",
+    "ansible.validation.lint.enabled": false
 }
