@@ -1,0 +1,22 @@
+---
+# Configure Banner and MOTD on VyOS devices
+- name: Configure MOTD
+  hosts: vyos
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+     # Configure the login banner
+    - name: Configure the Message of the Day (MOTD)
+      vyos.vyos.vyos_banner:
+        banner: pre-login
+        text: |
+          ******************************************************************
+          You are entering an automated network. Ansible never forgets.
+          ******************************************************************
+        state: present
+      register: banner_output
+
+    - name: Display the output of the configuration
+      ansible.builtin.debug:
+        msg: "{{ banner_output.commands }}"
