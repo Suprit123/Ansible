@@ -1,0 +1,36 @@
+---
+- name: Gather Facts For Routers
+  hosts: multivendor
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    # Cisco IOS Facts Gathering Task
+    - name: Gather Facts For Cisco IOS
+      cisco.ios.ios_facts:
+        gather_subset: config
+      # Condition to check for Cisco IOS devices using when statement
+      when: "ansible_network_os == 'ios'"
+      register: print_ios
+
+    - name: Display Cisco IOS Facts
+      ansible.builtin.debug:
+      # .split('\n')" to display each line separately
+        msg: "{{ print_ios.ansible_facts.ansible_net_config.split('\n') }}"
+      when: "ansible_network_os == 'ios'"
+      
+     # VyOS Facts Gathering Task 
+    - name: Gather Facts for VyOs
+      vyos.vyos.vyos_facts:
+        gather_subset: config
+      # Condition to check for VyOS devices using when statement
+      when: "ansible_network_os == 'vyos'"
+      register: print_vyos
+
+    - name: Display VyoS Facts
+      ansible.builtin.debug:
+      # Using [0] to access the first element of the list and then .split('\n')" to display each line separately
+        msg: "{{ print_vyos.ansible_facts.ansible_net_config[0].split('\n') }}"
+      when: "ansible_network_os == 'vyos'"
+      
+
