@@ -1,4 +1,4 @@
-# Cisco device c
+# Cisco device connection variables
 ansible_user: admin
 ansible_password: letmein
 ansible_network_os: ios
