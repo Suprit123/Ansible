@@ -1,0 +1,14 @@
+# R1 router interface configuration variable
+interface_config:
+  - name: GigabitEthernet0/2
+    description: Connected to VyOs1
+    ip: 192.168.1.2
+    mask: 255.255.255.0
+# R1 OSPF configuration variable
+ospf:
+  process_id: 1
+  rid: 3.3.3.3
+  networks:
+    - network: 192.168.1.0
+      wildcard: 0.0.0.255
+      area: 1

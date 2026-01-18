@@ -1,0 +1,12 @@
+# VyOs2 router interface variable
+interface_config:
+  - name: eth1
+    description: Connected to VyOs2
+    ip: 10.10.10.2/24
+
+# VyOs2 OSPF configuration variable
+ospf:
+  rid: 2.2.2.2
+  networks:
+    - network: 10.10.10.0/24
+      area: 0

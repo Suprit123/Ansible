@@ -1,0 +1,29 @@
+---
+- name: Configure Multivendor OSPF
+  hosts: multivendor
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Configure IOS devices using J2
+      cisco.ios.ios_config:
+        # Need to split the lines as ios_config expects a list of lines
+        lines: "{{ lookup('template', 'cisco.j2').split('\n') }}"
+      register: ios_output
+      when: ansible_network_os == 'ios'
+
+    - name: Display IOS Config OutPut
+      ansible.builtin.debug:
+        msg: "{{ ios_output }}"
+      when: ansible_network_os == 'ios' 
+
+    - name: Configure VyOs using J2
+      vyos.vyos.vyos_config:
+        lines: "{{ lookup('template', 'vyos.j2') }}"
+      register: vyos_output
+      when: ansible_network_os == 'vyos'
+
+    - name: Display VyOS Config OutPut
+      ansible.builtin.debug:
+        msg: "{{ vyos_output }}"
+      when: ansible_network_os == 'vyos'

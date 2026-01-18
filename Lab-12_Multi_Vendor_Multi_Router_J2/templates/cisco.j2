@@ -1,0 +1,15 @@
+# Interface Configuration
+{% for int in interface_config %}
+interface {{ int.name }}
+ description {{ int.description }}
+ ip address {{ int.ip }} {{ int.mask }}
+ no shut
+ exit
+{% endfor %}
+
+# OSPF Configuration
+router ospf {{ ospf.process_id }}
+ router-id {{ ospf.rid}}
+{% for net in ospf.networks %}
+ network {{ net.network }} {{ net.wildcard }} area {{ net.area}}
+{% endfor %}

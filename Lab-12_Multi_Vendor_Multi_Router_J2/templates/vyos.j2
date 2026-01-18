@@ -1,0 +1,10 @@
+# Interface Configuration
+{% for int in interface_config %}
+interfaces ethernet {{ int.name }} address {{ int.ip }}
+{% endfor %}
+
+# OSPF Configuration
+protocols ospf parameters router-id {{ ospf.rid }}
+{% for net in ospf.networks %}
+protocols ospf area {{ net.area }} network {{ net.network }}
+{% endfor %} 

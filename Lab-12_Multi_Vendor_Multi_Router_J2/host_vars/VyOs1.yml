@@ -1,0 +1,17 @@
+# VyOs1 router interface variable
+interface_config:
+  - name: "eth1"
+    ip: "10.10.10.1/24"
+    description: Connected to VyOs2
+
+  - name: "eth2"
+    description: Connected to Cisco1
+    ip: 192.168.1.1/24
+# Vyos1 OSPF configuration variable
+ospf:
+  rid: 1.1.1.1
+  networks:
+    - network: 10.10.10.0/24
+      area: 0
+    - network: 192.168.1.0/24
+      area: 1
