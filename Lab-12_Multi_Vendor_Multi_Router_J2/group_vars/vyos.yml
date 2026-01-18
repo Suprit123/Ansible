@@ -1,0 +1,8 @@
+# VyOS device connection variables
+ansible_user: vyos
+ansible_password: vyos
+ansible_network_os: vyos
+ansible_connection: network_cli
+ansible_become: yes
+ansible_become_method: enable
+ansible_command_timeout: 300
