@@ -34,13 +34,15 @@
         command: |
           {% if ansible_network_os == 'ios' %}
           show ip ospf neighbor
+          show ip int brief
           {% else %}
           show ip ospf neighbor
+          show interfaces
           {% endif %}
       register: ospf_output
       when: ansible_network_os in ['ios', 'vyos']
     
     - name: Display OSPF Neighbors
       ansible.builtin.debug:
-        msg: "{{ ospf_output }}"
+        msg: "{{ ospf_output.stdout_lines }}"
       when: ansible_network_os in ['ios', 'vyos']
