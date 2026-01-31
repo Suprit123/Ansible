@@ -1,0 +1,11 @@
+{% for l2 in vlans.l2_interfaces %}
+interfaces ethernet {{ l2.interface }} vif {{ l2.vif }} description '{{ l2.name }}'
+{% endfor %}
+
+{% for l3 in vlans.l3_interfaces %}
+{% for l2 in vlans.l2_interfaces %}
+{% if l2.vif == l3.vlan_number %}
+interfaces ethernet {{ l2.interface }} vif {{ l3.vlan_number }} address {{ l3.ip }}
+{% endif %}
+{% endfor %}
+{% endfor %}
