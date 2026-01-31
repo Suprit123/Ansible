@@ -1,0 +1,16 @@
+---
+
+- name: Backup Configuration
+  hosts: cisco_switches
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Backup running config of cisco switch
+      cisco.ios.ios_config:
+        backup: true
+      register: backup_result
+
+    - name: Display backup file path
+      ansible.builtin.debug:        
+        msg: "Backup file created at {{ backup_result.backup_path }}"
