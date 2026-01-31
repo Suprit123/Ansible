@@ -1,0 +1,18 @@
+# Access and Trunk Port Configuration for VyOS1
+vlans:
+  l2_interfaces:
+    - interface: eth0
+      name: Management
+      vif: 10
+
+    - interface: eth2
+      name: Sales
+      vif: 20
+
+  # SVI Configuration variables
+  l3_interfaces:
+    - vlan_number: 10
+      ip: 192.168.10.1/24
+
+    - vlan_number: 20
+      ip: 192.168.20.1/24

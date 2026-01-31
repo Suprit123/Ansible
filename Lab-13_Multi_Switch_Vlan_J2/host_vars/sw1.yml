@@ -1,0 +1,23 @@
+# Access and Trunk Port Configuration for Cisco
+vlans:
+  l2_interfaces:
+    - interface: GigabitEthernet0/2
+      mode: access
+      vlan: 11
+
+    - interface: GigabitEthernet0/3
+      mode: access
+      vlan: 12
+
+    - interface: GigabitEthernet0/1
+      mode: trunk
+
+  # SVI Configuration variables
+  l3_interfaces:
+    - vlan_number: 11
+      name: Prod
+      ip: 192.168.11.1 255.255.255.0
+
+    - vlan_number: 12
+      name: Non-Prod
+      ip: 192.168.12.1 255.255.255.0

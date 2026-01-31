@@ -1,0 +1,26 @@
+{# Create VLAN definitions #}
+{% for v in vlans.l3_interfaces %}
+vlan {{ v.vlan_number }}
+ name {{ v.name }}
+{% endfor %}
+
+{# Configure SVI interfaces with IP addressing and no shutdown #}
+{% for v in vlans.l3_interfaces %}
+interface vlan {{ v.vlan_number }}
+ ip address {{ v.ip }}
+ no shutdown
+{% endfor %}
+
+{# Configure L2 access and trunk ports #}
+{% for int in vlans.l2_interfaces %}
+{% if int.mode == "access" %}
+interface {{ int.interface }}
+ switchport mode access
+ switchport access vlan {{ int.vlan }}
+ spanning-tree portfast
+{% else %}
+interface {{ int.interface }}
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+{% endif %}
+{% endfor %}

@@ -1,0 +1,44 @@
+---
+- name: Configure Vlans
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Configure vlan on IOS
+      cisco.ios.ios_config:
+        lines: "{{ lookup('template', 'cisco-vlans.j2')}}"
+      register: ios_vlan_config
+      when: ansible_network_os == 'ios'
+
+    - name: Display the IOS Config
+      ansible.builtin.debug:
+        msg: "{{ ios_vlan_config }}"
+      when: ansible_network_os == 'ios'
+
+    - name: Configure vlan on Vyos
+      vyos.vyos.vyos_config:
+        lines: "{{ lookup('template', 'vyos-vlans.j2') }}"
+      register: vyos_vlan_config
+      when: ansible_network_os == 'vyos'
+
+    - name: Display the Vyos Config
+      ansible.builtin.debug:
+        msg: "{{ vyos_vlan_config }}"
+      when: ansible_network_os == 'vyos'
+
+    - name: Verify the configuration on both IOS and Vyos
+      ansible.netcommon.cli_command:
+        command: |
+          {% if ansible_network_os == 'ios' %}
+          show vlan brief
+          {% else %}
+          show interfaces
+          {% endif %}
+      register: vlan_output
+      when: ansible_network_os in ['ios', 'vyos']
+
+    - name: Display VLAN Output
+      ansible.builtin.debug:
+        msg: "{{ vlan_output }}"
+      when: ansible_network_os in ['ios', 'vyos']
