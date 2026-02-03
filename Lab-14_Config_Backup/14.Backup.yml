@@ -1,5 +1,4 @@
 ---
-
 - name: Backup Configuration
   hosts: cisco_switches
   gather_facts: false
@@ -9,8 +8,10 @@
     - name: Backup running config of cisco switch
       cisco.ios.ios_config:
         backup: true
+        backup_options:
+          dir_path: "/Users/apple/Desktop/GitHub/Ansible/Lab-14_Config_Backup"
       register: backup_result
 
     - name: Display backup file path
-      ansible.builtin.debug:        
+      ansible.builtin.debug:
         msg: "Backup file created at {{ backup_result.backup_path }}"
