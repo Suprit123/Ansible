@@ -2,7 +2,7 @@
 
 - name: Backup configuration using specific commands
   hosts: cisco_switches
-  gather_facts: false
+  gather_facts: true
   connection: network_cli
 
   tasks:
@@ -20,9 +20,10 @@
       content: |
         ========================================
         Device: {{ inventory_hostname }}
+        Timestamp: {{ now(fmt="%Y-%m-%d_%H-%M-%S") }}
         ========================================
         # Using the captured command_output using [] to access each command's output
-        === SHOW IP ARP ===
+        === SHOW IP ARP ===sssssss
         {{ command_output.stdout[0] }}
 
         === SHOW IP INTERFACE BRIEF ===
@@ -31,4 +32,4 @@
         === SHOW MAC ADDRESS-TABLE ===
         {{ command_output.stdout[2] }}
     # Specify the destination path on the control node
-      dest: "/Users/apple/Desktop/GitHub/Ansible/Lab-15_Config_Backup_Commands/backup_{{ inventory_hostname }}.txt"
+      dest: "/Users/apple/Desktop/GitHub/Ansible/Lab-15_Config_Backup_Commands/backup_{{ inventory_hostname }}_{{now(fmt='%Y-%m-%d_%H-%M-%S')}}.txt"
