@@ -1,0 +1,48 @@
+---
+- name: Configure back for Multivendor Router
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+  # Using the command module to backup the config for both Cisco and VyOS devices
+    - name: Backup config for cisco using commands
+    # Using the when condition to check if the current host is in the cisco group before executing the task
+      when: inventory_hostname in groups['cisco']
+      cisco.ios.ios_command:
+        commands:
+          - show running-config
+          - show ip int brief
+      register: cisco_command_output
+
+    - name: Backup config for vyos using commands
+      # Using the when condition to check if the current host is in the vyos group before executing the task
+      when: inventory_hostname in groups['vyos']
+      vyos.vyos.vyos_command:
+        commands:
+          - show configuration
+          - show interfaces
+      register: vyos_command_output
+
+    # Save the config to separate files on the control node and using the now function to include the date and time in the filename
+    - name: Save the config to separate files on the control node
+      copy:
+        content: |
+          ========================================
+          Device: {{ inventory_hostname }}
+          Time: {{ now(fmt='%Y-%m-%d %H:%M:%S') }}
+          ========================================
+          {% if inventory_hostname in groups['cisco'] %}
+          === SHOW RUNNING-CONFIG ===
+          {{ cisco_command_output.stdout[0] }}
+
+          === SHOW IP INTERFACE BRIEF ===
+          {{ cisco_command_output.stdout[1] }}
+          {% elif inventory_hostname in groups['vyos'] %}
+          === SHOW CONFIGURATION ===
+          {{ vyos_command_output.stdout[0] }}
+
+          === SHOW INTERFACES ===
+          {{ vyos_command_output.stdout[1] }}
+          {% endif %}
+        dest: "/Users/apple/Desktop/GitHub/Ansible/Lab-16_Config_Bakcup_Multi_Vendor/backup_{{ inventory_hostname }}_{{now(fmt='%Y-%m-%d_%H-%M-%S')}}.txt"
